@@ -4,7 +4,8 @@
   "description": "Best practice for storing complete \"GL style\" for a map in a GitHub repo, gist, directory or a zip package.",
   "main": "./task/run.js",
   "scripts": {
-    "test": "node task/test.js"
+    "test": "node task/test.js",
+    "build_all": "bash task/build.sh"
   },
   "repository": {
     "type": "git",

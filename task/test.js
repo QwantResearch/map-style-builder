@@ -8,13 +8,13 @@ var stylePath = '../style.json';
 var styleString = fs.readFileSync(stylePath, 'utf8');
 var style = JSON.parse(styleString);
 
-var errors = mbgl.validate(style);
+/*var errors = mbgl.validate(style);
 if(errors && errors.length) {
   console.error(
       'ERROR: The style is not valid according to mapbox-gl-style-spec.');
   console.error(errors);
   process.exit(1);
-}
+}*/
 
 checkFonts(style);
 
