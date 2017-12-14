@@ -1,23 +1,31 @@
-# "GL Style Tool" package
+# "GL Style Builder" package
 
-Tools to build, debug and deploy "GL style".
+Some tools to build, debug and publish GL Style at Qwant
 
 
-### Requirements
-- GitHub repository :
+## Build
+The build command will generate some sprites out of your icons folder and create style files with the url of the tileservers.
+
+#### Requirements
+- A repository with
   - Style saved as a `style.json` in root
   - Icons used in style saved as SVG files inside `icons/`
 
-### Installation
-- Clone this repo inside your style folder
-- `npm test` to check if your style is ok
-- `npm run build_all` to create all the styles json files
+#### Usage
+`npm run build_all -- PATH/TO/YOUR/MAPSTYLE/`
 
+You can also define this package as a dependency of your style node package.
 
-### Compare
-You can use the `compare.html` page to check your style builds.
+### Test
+`npm test -- PATH/TO/YOUR/MAPSTYLE/` to check if your style is ok
+
+## Compare
+You can use the built `compare.html` page to check your style builds.
 
 You need to insert a valid Mapbox token in the built `compare.html` page.
 
-### Debug
-You can use the debug.html page to inspect your tiles et check your style
+## Debug
+You can use the built `debug.html` page to inspect your tiles et check your style
+
+## Publish
+The publish command will deploy your built styles as a github release (TODO)
