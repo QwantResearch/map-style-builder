@@ -12,4 +12,4 @@ if [ -d $1/icons ]; then
   ./node_modules/.bin/spritezero $1/build/sprite $1/icons
   ./node_modules/.bin/spritezero --retina $1/build/sprite@2x $1/icons
 fi
-node ./task/build.js --style_dir $1
+node ./task/build.js --style_dir $1 --conf $2

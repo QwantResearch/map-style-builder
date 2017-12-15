@@ -1,5 +1,3 @@
-var langFallback = require('./lang-fallback.js');
-
 exports.adjust_style_without_tilejson = function(opts, tiles_url_base, tiles_url_poi) {
 
   var style = opts.style;
@@ -48,10 +46,6 @@ exports.adjust_style_without_tilejson = function(opts, tiles_url_base, tiles_url
 
   style.glyphs = "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=RiS4gsgZPZqeeMlIyxFo";
 
-  var langCfg = opts.langCfg;
-  if (langCfg) {
-    langFallback.decorate(style, langCfg);
-  }
 
 };
 
@@ -86,9 +80,5 @@ exports.adjustStyleForOpenMapTilesCDN = function(opts) {
 
   style.glyphs = "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=RiS4gsgZPZqeeMlIyxFo";
 
-  var langCfg = opts.langCfg;
-  if (langCfg) {
-    langFallback.decorate(style, langCfg);
-  }
 
 };
