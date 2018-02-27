@@ -106,7 +106,7 @@ exports.adjustStyleForOpenMapTilesCDN = function(opts) {
   }
 
   if (opts.needSprite) {
-    style.sprite = "https://rawgit.com/lukasmartinelli/osm-liberty/gh-pages/sprites/osm-liberty";
+    style.sprite = "https://qwantresearch.github.io/qwant-basic-gl-style/sprite";
   } else {
     delete style.sprite;
   }
