@@ -45,8 +45,7 @@ exports.adjustStyleWithoutTilejson = function(opts) {
     delete style.sprite;
   }
 
-  //TODO : build font
-  style.glyphs = "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=RiS4gsgZPZqeeMlIyxFo";
+  style.glyphs = conf.fontserver + "{fontstack}/{range}.pbf";
 
 };
 
@@ -78,9 +77,7 @@ exports.adjustStyleWithTilejson = function(opts) {
     delete style.sprite;
   }
 
-  //TODO : build font
-  style.glyphs = "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=RiS4gsgZPZqeeMlIyxFo";
-
+  style.glyphs = conf.fontserver + "{fontstack}/{range}.pbf";
 };
 
 exports.adjustStyleForOpenMapTilesCDN = function(opts) {
@@ -111,7 +108,7 @@ exports.adjustStyleForOpenMapTilesCDN = function(opts) {
     delete style.sprite;
   }
 
-  style.glyphs = "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=RiS4gsgZPZqeeMlIyxFo";
+  style.glyphs = "https://qwantresearch.github.io/fonts/{fontstack}/{range}.pbf";
 
 
 };
