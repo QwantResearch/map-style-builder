@@ -45,8 +45,7 @@ exports.adjustStyleWithoutTilejson = function(opts) {
     delete style.sprite;
   }
 
-  //TODO : build font
-  style.glyphs = "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=RiS4gsgZPZqeeMlIyxFo";
+  style.glyphs = conf.fontserver + "{fontstack}/{range}.pbf";
 
 };
 
@@ -78,9 +77,7 @@ exports.adjustStyleWithTilejson = function(opts) {
     delete style.sprite;
   }
 
-  //TODO : build font
-  style.glyphs = "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=RiS4gsgZPZqeeMlIyxFo";
-
+  style.glyphs = conf.fontserver + "{fontstack}/{range}.pbf";
 };
 
 exports.adjustStyleForOpenMapTilesCDN = function(opts) {
@@ -106,12 +103,12 @@ exports.adjustStyleForOpenMapTilesCDN = function(opts) {
   }
 
   if (opts.needSprite) {
-    style.sprite = "https://rawgit.com/lukasmartinelli/osm-liberty/gh-pages/sprites/osm-liberty";
+    style.sprite = "https://qwantresearch.github.io/qwant-basic-gl-style/sprite";
   } else {
     delete style.sprite;
   }
 
-  style.glyphs = "https://free.tilehosting.com/fonts/{fontstack}/{range}.pbf?key=RiS4gsgZPZqeeMlIyxFo";
+  style.glyphs = "https://qwantresearch.github.io/fonts/{fontstack}/{range}.pbf";
 
 
 };

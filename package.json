@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/QwantResearch/map-style-builder#readme",
   "dependencies": {
-    "@mapbox/mapbox-gl-style-spec": "^10.1.0",
+    "@mapbox/mapbox-gl-style-spec": "^11.1.0",
     "@mapbox/spritezero": "^5.0.0",
     "fs-extra": "^1.0.0",
     "glob": "^7.1.2",
