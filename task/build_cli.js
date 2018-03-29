@@ -14,15 +14,6 @@ const args = yargs
     }
   })
   .options({
-    'pixel-ratio': {
-      describe: 'The pixel ratio',
-      type: 'int',
-      default: 1,
-      demandOption: false,
-      nargs: 1
-    }
-  })
-  .options({
     conf: {
       describe: 'The conf file with the urls in it',
       type: 'string',
@@ -45,7 +36,7 @@ const jsonconf = JSON.parse(confStr)
 let options = {
   styleDir: args['style-dir'],
   conf: jsonconf,
-  pixelRatios: [args['pixel-ratio']],
+  pixelRatios: [1,2],
   outPath: buildDir
 }
 
