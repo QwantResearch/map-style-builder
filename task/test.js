@@ -55,30 +55,31 @@ if(styleString.trim() !== formattedStyleString.trim()) {
 
 /* Test i18n config file */
 
-const languageFallbacks = yaml.readSync(path.join(args.style_dir,'i18n.yml')).languageFallbacks
+const languageFallbacks = yaml.readSync(path.resolve(path.join(args.style_dir,'i18n.yml'))).languageFallbacks
 
 const layersFields = [];
 let error = false;
 
 style.layers.map((layer) => {
-  if(layer['layout'] && layer['layout']['text-field'] && layer['layout']['text-field'] === '{name}') {
+  /* looking for text field containing {name} */
+  if(layer['layout'] && layer['layout']['text-field'] && layer['layout']['text-field'].match(/^\{name/)) {
     let fallback = languageFallbacks.find((languageFallback) => {
       return languageFallback.id === layer.id
     });
 
     if(fallback) {
-      layersFields.push({status : true, id : layer.id, lang : fallback.lang.toString().substr(0,30) + '...'})
+      layersFields.push({success : true, id : layer.id, lang : fallback.lang.toString().substr(0,30) + '…'})
     } else {
       error = true;
-      layersFields.push({status : false, id : layer.id})
+      layersFields.push({success : false, id : layer.id})
     }
   }
 });
 
 if(error) {
-  console.error('ERROR I18n file config is incomplete')
+  console.error('ERROR I18n file config is incomplete');
   layersFields.forEach((layersField) => {
-    if(layersField.status) {
+    if(layersField.success) {
       console.log(`✓ ${layersField.id} | ${layersField.lang}`)
     } else {
       console.error(`❌ ${layersField.id}`)
@@ -87,5 +88,5 @@ if(error) {
 
   process.exit(1);
 } else {
-  console.log(`✓ i18n config file`)
+  console.log(`✓ i18n config file is ok`)
 }
