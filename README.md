@@ -16,6 +16,8 @@ The build command will generate some sprites out of your icons folder and create
 #### Usage
 `npm run build_all -- --style-dir PATH/TO/YOUR/MAPSTYLE/FOLDER --conf PATH/TO/YOUR/CONF`
 
+You can also build localised versions of your style, using the `i18n` parameter (`npm run build_all -- --style-dir PATH/TO/YOUR/MAPSTYLE/FOLDER --conf PATH/TO/YOUR/CONF --i18n fr`)
+
 You can also define this package as a dependency of your style node package.
 
 ### Test
@@ -28,6 +30,3 @@ You need to insert a valid Mapbox token in the built `compare.html` page.
 
 ## Debug
 You can use the built `debug.html` page to inspect your tiles et check your style
-
-## Publish
-The publish command will deploy your built styles as a github release (TODO)
