@@ -21,6 +21,15 @@ const args = yargs
       nargs: 1
     }
   })
+  .options({
+    i18n: {
+      describe: "Name of the default locale that will be used to \
+render the labels. If not defined, 'name' tag is always used.",
+      type: 'string',
+      nargs: 1,
+      default: undefined
+    }
+  })
   .help('h')
   .alias('h', 'help')
   .argv
@@ -37,7 +46,8 @@ let options = {
   styleDir: args['style-dir'],
   conf: jsonconf,
   pixelRatios: [1,2],
-  outPath: buildDir
+  outPath: buildDir,
+  i18n: args['i18n']
 }
 
 mkdirp(buildDir)
