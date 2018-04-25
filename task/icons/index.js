@@ -12,22 +12,18 @@ module.exports = (options, style) => {
 
     icons.forEach((icon) => {
       if (icon.class && icon.subclass) {
-
-        iconsCases.push(["==",
+        let iconSelector = ["all", ["==",
           ["get", "subclass"],
-          icon.subclass])
+          icon.subclass],
+          ["==",
+            ["get", "class"],
+
+            icon.class]
+        ]
+        iconsCases.push(iconSelector)
         iconsCases.push(icon.iconName)
         if (icon.color) {
-          colorsCases.push(["all", ["==",
-              ["get", "subclass"],
-
-              icon.subclass],
-              ["==",
-                ["get", "class"],
-
-                icon.class]
-            ]
-          )
+          colorsCases.push(iconSelector)
           colorsCases.push(icon.color)
         }
 
@@ -57,25 +53,5 @@ module.exports = (options, style) => {
     })
   }
 
-
   return style
-
 }
-
-
-
-
-
-
-/*
-["case",
-  ["==",
-    ["get", "subclass"],
-    "restaurant"],
-  "town-hall-11",
-  ["==",
-    ["get", "subclass"],
-    "hotel"],
-  "lodging-11",
-  "grocery-11"
-]*/
