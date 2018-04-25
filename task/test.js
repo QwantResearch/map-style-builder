@@ -85,7 +85,6 @@ if(error) {
       console.error(`❌ ${layersField.id}`)
     }
   });
-
   process.exit(1);
 } else {
   console.log(`✓ i18n config file is ok`)
