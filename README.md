@@ -20,6 +20,8 @@ You can also build localised versions of your style, using the `i18n` parameter 
 
 You can also define this package as a dependency of your style node package.
 
+You can also define webfont generation using `--webfont=true` this will create a subfolder containing webfont (css + ttf + woff) inside build folder
+
 ### Test
 `npm test -- PATH/TO/YOUR/MAPSTYLE/FOLDER` to check if your style is ok
 

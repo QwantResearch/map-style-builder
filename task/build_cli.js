@@ -30,6 +30,14 @@ render the labels. If not defined, 'name' tag is always used.",
       default: undefined
     }
   })
+  .options({
+    webfont: {
+      describe: "Enable the build process of an icon font containing style icons",
+      type: 'boolean',
+      nargs: 1,
+      default: false
+    }
+  })
   .help('h')
   .alias('h', 'help')
   .argv
@@ -41,13 +49,15 @@ const confStr = fs.readFileSync(args.conf, 'utf8')
 const styleStr = fs.readFileSync(stylePath, 'utf8')
 const style = JSON.parse(styleStr)
 const jsonconf = JSON.parse(confStr)
+const webfont = args.webfont
 
 let options = {
   styleDir: args['style-dir'],
   conf: jsonconf,
   pixelRatios: [1,2],
   outPath: buildDir,
-  i18n: args['i18n']
+  i18n: args['i18n'],
+  webfont:webfont
 }
 
 mkdirp(buildDir)
@@ -55,6 +65,9 @@ options.output = 'production'
 const builtStyle = build(style, options)
 outPath = path.join(buildDir, 'built-style.json')
 fs.writeFileSync(outPath, builtStyle, 'utf8')
+
+options.webfont = false /* we don't need build sprite & font twice */
+options.needSprite = false
 
 options.output = 'debug'
 const builtStyleDebug = build(style, options)
