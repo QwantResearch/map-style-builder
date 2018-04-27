@@ -31,6 +31,13 @@ render the labels. If not defined, 'name' tag is always used.",
     }
   })
   .options({
+    icons: {
+      describe: "Enable the build process importing icon data from icon.yml",
+      nargs: 1,
+      default: false
+    }
+  })
+  .options({
     webfont: {
       describe: "Enable the build process of an icon font containing style icons",
       type: 'boolean',
@@ -57,6 +64,7 @@ let options = {
   pixelRatios: [1,2],
   outPath: buildDir,
   i18n: args['i18n'],
+  icons: args['icons'],
   webfont:webfont
 }
 

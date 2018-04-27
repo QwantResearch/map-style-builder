@@ -22,6 +22,8 @@ You can also define this package as a dependency of your style node package.
 
 You can also define webfont generation using `--webfont=true` this will create a subfolder containing webfont (css + ttf + woff) inside build folder
 
+You can also define icons sourcing generation using `--icons=true` this will read icons.yml and create rules to the style displaying icons using class & subclass definitions
+
 ### Test
 `npm test -- PATH/TO/YOUR/MAPSTYLE/FOLDER` to check if your style is ok
 
