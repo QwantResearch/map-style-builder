@@ -5,12 +5,17 @@ module.exports = (options, style) => {
   if(options.icons) {
     let styleDir = options.styleDir
     const layerConfigPath = path.resolve(`${styleDir}/icons.yml`)
+    let icons = null
+    try {
+      icons = nodeYaml.readSync(layerConfigPath)
+    } catch (e) {
+      throw `You passed icon argument to true but there is no icon.yml file.`
+    }
 
-    const icons = nodeYaml.readSync(layerConfigPath)
     let iconsCases = ["case"]
     let colorsCases = ["case"]
 
-    icons.forEach((icon) => {
+    icons.mappings.forEach((icon) => {
       if (icon.class && icon.subclass) {
         let iconSelector = ["all", ["==",
           ["get", "subclass"],
@@ -41,8 +46,8 @@ module.exports = (options, style) => {
       }
     })
 
-    iconsCases.push('default')
-    colorsCases.push('#123456')
+    iconsCases.push(icons.defaultIcon)
+    colorsCases.push(icons.defaultColor)
 
 
     style.layers.forEach((layer) => {

@@ -3,7 +3,7 @@ const mbgl = require('@mapbox/mapbox-gl-style-spec');
 const checkFonts = require('./check-fonts');
 const path = require('path');
 const yargs = require('yargs');
-const yaml = require('node-yaml')
+const yaml = require('node-yaml');
 
 let args = yargs
   .usage('Usage: $0 [options]')
@@ -88,4 +88,66 @@ if(error) {
   process.exit(1);
 } else {
   console.log(`✓ i18n config file is ok`)
+}
+
+
+
+/* test icons */
+let y;
+let iconError = false;
+try {
+  y = yaml.readSync(path.resolve(`${args.style_dir}/icons.yml`))
+} catch (e) {
+  iconError = true;
+  console.error('icon.yml missing in this style. Skip')
+}
+
+if(!iconError) {
+  const iconWarnings = [];
+  const svgMissings = [];
+
+  y.mappings.forEach((mapping) => {
+    if(!mapping.color || !mapping.iconName) {
+      iconWarnings.push(mapping)
+      try {
+        fs.openSync(path.resolve(`${args.style_dir}/icons/${mapping.iconName}.svg`), 'r')
+      } catch (e) {
+        svgMissings.push(mapping.iconName)
+      }
+    }
+  })
+
+  if(svgMissings.length > 0) {
+    console.error(`Warning ${svgMissings.length} svg file missing`)
+    svgMissings.forEach((svgMissing) => {
+      console.error(`❌ ${svgMissing}`)
+    })
+  } else {
+    console.log('✓ no missing svg')
+  }
+
+  if(iconWarnings) {
+    console.error(`Warning ${iconWarnings.length} incomplete icons data`)
+    iconWarnings.forEach((iconWarning) => {
+      if(!iconWarning.color) {
+        console.error(`❌ color missing ${iconWarning.class ? iconWarning.class : ''} ${iconWarning.subclass ? iconWarning.subclass : ''}`)
+      } else {
+        console.error(`❌ icon missing ${iconWarning.class ? iconWarning.class : ''} ${iconWarning.subclass ? iconWarning.subclass : ''}`)
+      }
+
+    })
+  } else {
+    console.log('✓ icon config file is complete')
+  }
+
+}
+
+
+/* test layers */
+let poiLayer = style.layers.find((layer) => {
+  return layer.id.match(/poi-level-/)
+})
+
+if(!poiLayer) {
+  console.error('❌ No poi layer found, one layer name must match /poi-level-/')
 }
