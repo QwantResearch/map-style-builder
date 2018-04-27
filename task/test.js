@@ -99,7 +99,7 @@ try {
   y = yaml.readSync(path.resolve(`${args.style_dir}/icons.yml`))
 } catch (e) {
   iconError = true;
-  console.error('icon.yml missing in this style. Skip')
+  console.error('icons.yml missing in this style. Skip')
 }
 
 if(!iconError) {
@@ -137,9 +137,11 @@ if(!iconError) {
 
     })
   } else {
-    console.log('✓ icon config file is complete')
+    console.log('✓ ok icon config file is complete')
   }
 
+} else {
+  console.warn('No icons.yml file given')
 }
 
 
