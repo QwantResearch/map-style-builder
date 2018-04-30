@@ -4,7 +4,7 @@
   "description": "Some tools to build and debug GL Style at Qwant",
   "main": "./task/run.js",
   "scripts": {
-    "test": "node task/test.js --style_dir ",
+    "test": "node test/index.js --style_dir ",
     "build_all": "node task/build_cli.js"
   },
   "repository": {
@@ -30,6 +30,10 @@
     "mkdirp": "^0.5.1",
     "node-yaml": "^3.1.1",
     "rw": "^1.3.3",
+    "tmp": "0.0.33",
+    "webfonts-generator": "^0.4.0",
+    "xml": "^1.0.1",
+    "xml2js": "^0.4.19",
     "yargs": "^5.0.0"
   }
 }
