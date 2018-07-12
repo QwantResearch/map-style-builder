@@ -32,6 +32,17 @@ module.exports = (options, style) => {
           colorsCases.push(icon.color)
         }
 
+      } else if (icon.class) {
+        iconsCases.push(["==",
+          ["get", "class"],
+          icon.class])
+        iconsCases.push(icon.iconName)
+        if (icon.color) {
+          colorsCases.push(["==",
+            ["get", "class"],
+            icon.class])
+          colorsCases.push(icon.color)
+        }
       } else {
         iconsCases.push(["==",
           ["get", "subclass"],
