@@ -80,7 +80,7 @@ exports.adjustStyleWithTilejson = function(opts) {
   style.glyphs = conf.fontserver + "{fontstack}/{range}.pbf";
 };
 
-exports.adjustStyleForOpenMapTilesCDN = function(opts) {
+exports.adjustStyleForMapTilerCloud = function(opts) {
 
   var style = opts.style;
 
@@ -92,13 +92,13 @@ exports.adjustStyleForOpenMapTilesCDN = function(opts) {
   if (style.sources['basemap']) {
     style.sources['basemap'] = {
       "type": "vector",
-      "url": "https://free.tilehosting.com/data/v3.json?key=RiS4gsgZPZqeeMlIyxFo"
+      "url": "https://maps.tilehosting.com/data/v3.json?key=TwYZ3xrAkaB6GkhLM2vS"
     }
   }
   if (style.sources['poi']) {
     style.sources['poi'] = {
       "type": "vector",
-      "url": "https://free.tilehosting.com/data/v3.json?key=RiS4gsgZPZqeeMlIyxFo"
+      "url": "https://maps.tilehosting.com/data/v3.json?key=TwYZ3xrAkaB6GkhLM2vS"
     }
   }
 
