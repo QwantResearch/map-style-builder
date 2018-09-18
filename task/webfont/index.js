@@ -42,17 +42,21 @@ module.exports = async (options) => {
     let cleanedIcons = await Promise.all(iconsPromises)
 
     /* build font */
-    webfontsGenerator({
-      fontHeight : 150,
-      files: cleanedIcons.map((icon) => {return `${path.join(tmpSvgs.name, `${icon}.svg`)}`}),
-      dest: `${path.resolve(options.styleDir)}/build/font`
-    }, (error) => {
-      if (error) {
-        console.error('Error while building webfont!', error);
-      } else {
-        console.log(`Webfont built (${cleanedIcons.length} glyphs)`);
-      }
-      tmpSvgs.removeCallback()
+    return new Promise((resolve, reject) => {
+      webfontsGenerator({
+        fontHeight : 150,
+        files: cleanedIcons.map((icon) => {return `${path.join(tmpSvgs.name, `${icon}.svg`)}`}),
+        dest: `${path.resolve(options.styleDir)}/build/font`
+      }, (error, result) => {
+        tmpSvgs.removeCallback()
+        if (error) {
+          console.error('Error while building webfont!', error);
+          reject(err)
+        } else {
+          console.log(`Webfont built (${cleanedIcons.length} glyphs)`);
+          resolve()
+        }
+      })
     })
   }
 }
