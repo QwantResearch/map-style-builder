@@ -14,18 +14,18 @@ exports.adjustStyleWithoutTilejson = function(opts) {
     let schema_basemap = {...tileschema_base}
     delete schema_basemap.vector_layers
     style.sources['basemap'] = {
+      ...schema_basemap,
       "type": "vector",
       "tiles": conf.tileserver_base,
-      ...schema_basemap
     }
   }
   if (style.sources['poi']) {
     let schema_poi = {...tileschema_poi}
     delete schema_poi.vector_layers
     style.sources['poi'] = {
+      ...schema_poi,
       "type": "vector",
       "tiles": conf.tileserver_poi,
-      ...schema_poi
     }
   }
   if (opts.needSprite) {
