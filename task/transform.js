@@ -2,6 +2,8 @@ exports.adjustStyleWithoutTilejson = function(opts) {
 
   var style = opts.style;
   var conf = opts.conf_url;
+  var tileschema_base = opts.tileschema_base;
+  var tileschema_poi = opts.tileschema_poi;
 
   delete style.created;
   delete style.draft;
@@ -9,34 +11,21 @@ exports.adjustStyleWithoutTilejson = function(opts) {
   delete style.owner;
 
   if (style.sources['basemap']) {
+    let schema_basemap = {...tileschema_base}
+    delete schema_basemap.vector_layers
     style.sources['basemap'] = {
       "type": "vector",
       "tiles": conf.tileserver_base,
-      "name": "OpenMapTiles",
-      "format": "pbf",
-      "basename": "v3.6.mbtiles",
-      "id": "openmaptiles",
-      "attribution": "Qwant Maps <a href=\"http://www.openmaptiles.org/\" target=\"_blank\">&copy; OpenMapTiles</a> <a href=\"http://www.openstreetmap.org/about/\" target=\"_blank\">&copy; OpenStreetMap contributors</a>",
-      "center": [-12.2168, 28.6135, 4],
-      "description": "Une adaptation des tuiles OpenMapTiles pour Qwant Maps",
-      "maxzoom": 15,
-      "minzoom": 0,
-      "pixel_scale": "256",
+      ...schema_basemap
     }
   }
   if (style.sources['poi']) {
+    let schema_poi = {...tileschema_poi}
+    delete schema_poi.vector_layers
     style.sources['poi'] = {
       "type": "vector",
       "tiles": conf.tileserver_poi,
-      "name": "OpenMapTiles POIs",
-      "format": "pbf",
-      "basename": "v3.6.mbtiles",
-      "id": "poi",
-      "center": [-12.2168, 28.6135, 4],
-      "description": "Une adaptation des tuiles OpenMapTiles pour Qwant Maps - des POIs",
-      "maxzoom": 15,
-      "minzoom": 12,
-      "pixel_scale": "256",
+      ...schema_poi
     }
   }
   if (opts.needSprite) {
