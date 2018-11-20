@@ -11,7 +11,7 @@ The build command will generate some sprites out of your icons folder and create
   - Style saved as a `style.json`
   - TileJSON, with the schema of the tiles, saved as `tileschema_base.json` and  `tileschema_poi.json`
   - Icons used in style saved as SVG files inside `icons/`
-- A json configuration file, with some url in it. See `prod_conf.json` if you need inspiration
+- A json configuration file, with some url in it. See `prod_conf.json`, that contains Qwant instances ones, if you need inspiration - Please note that Qwant instances are internal components and are not meant (yet) to be used directly other than as part of Qwant Maps. You can learn more in our [Terms of services](https://about.qwant.com/fr/legal/cgu/qwant-maps/)
 
 #### Usage
 `npm run build_all -- --style-dir PATH/TO/YOUR/MAPSTYLE/FOLDER --conf PATH/TO/YOUR/CONF`
