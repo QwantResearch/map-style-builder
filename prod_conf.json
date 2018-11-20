@@ -1,14 +1,10 @@
 {
   "tileserver_base": [
-    "http://a.tiles.maps.qwant.com:6533/oz/{z}/{x}/{y}.pbf",
-    "http://b.tiles.maps.qwant.com:6533/oz/{z}/{x}/{y}.pbf",
-    "http://c.tiles.maps.qwant.com:6533/oz/{z}/{x}/{y}.pbf"
+    "https://www.qwant.com/maps/tiles/ozbasemap/{z}/{x}/{y}.pbf"
   ],
   "tileserver_poi": [
-    "http://a.tiles.maps.qwant.com:6533/poi/{z}/{x}/{y}.pbf",
-    "http://b.tiles.maps.qwant.com:6533/poi/{z}/{x}/{y}.pbf",
-    "http://c.tiles.maps.qwant.com:6533/poi/{z}/{x}/{y}.pbf"
+    "https://www.qwant.com/maps/tiles/ozpoi/{z}/{x}/{y}.pbf"
   ],
-  "spriteserver": "https://qwantresearch.github.io/qwant-basic-gl-style/",
-  "fontserver": "https://qwantresearch.github.io/fonts/"
+  "spriteserver": "https://www.qwant.com/maps/mapstyle/",
+  "fontserver": "https://www.qwant.com/maps/mapstyle/font/"
 }
