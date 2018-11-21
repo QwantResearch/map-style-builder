@@ -5,6 +5,6 @@
   "tileserver_poi": [
     "https://www.qwant.com/maps/tiles/ozpoi/{z}/{x}/{y}.pbf"
   ],
-  "spriteserver": "https://www.qwant.com/maps/mapstyle/",
+  "spriteserver": "https://qwantresearch.github.io/qwant-basic-gl-style/",
   "fontserver": "https://www.qwant.com/maps/mapstyle/font/"
 }
