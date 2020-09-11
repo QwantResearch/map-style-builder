@@ -1,36 +1,31 @@
-const xml2js = require('xml2js');
 const webfontsGenerator = require('webfonts-generator');
 const tmp = require('tmp')
 
-const asyncParseString = xml2js.parseString
 const fs = require('fs')
 const util = require('util')
 const path = require('path')
 
+const cleanSvgIcon = require('../../lib/clean_svg_icon');
 
 module.exports = async (options) => {
   /* promisify */
   const readFile = util.promisify(fs.readFile)
   const readdir = util.promisify(fs.readdir)
-  const parseString = util.promisify(asyncParseString)
 
   let icons = await readdir(`${path.resolve(options.styleDir)}/icons`)
   const tmpSvgs = tmp.dirSync({unsafeCleanup : true})
 
   /* clean circle form from SVG */
   let iconsPromises = icons.filter((icon) => {
-    /* clean size from svg */
+    /* use hi-res versions only */
     return icon.match(/-15\.svg$/)
   }).map((icon) => {
-    const xmlBuilder = new xml2js.Builder()
     return new Promise(async (resolve, reject) => {
       try {
-        let svgStream = await readFile(`${path.resolve(options.styleDir)}/icons/${icon}`)
-        let data = await parseString(svgStream)
-        delete data.svg.rect
-        const xml = xmlBuilder.buildObject(data)
-        let iconName = icon.match(/^(.*?)-[0-9]{1,2}\.svg$/)[1]
-        fs.writeFileSync(`${tmpSvgs.name}/${iconName}.svg`,xml)
+        const svgStream = await readFile(`${path.resolve(options.styleDir)}/icons/${icon}`)
+        const cleanSvg = await cleanSvgIcon(svgStream)
+        const iconName = icon.match(/^(.*?)-[0-9]{1,2}\.svg$/)[1]
+        fs.writeFileSync(`${tmpSvgs.name}/${iconName}.svg`, cleanSvg)
         resolve(iconName)
       } catch(e) {
         reject(e)
