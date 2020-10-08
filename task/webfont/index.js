@@ -5,7 +5,7 @@ const fs = require('fs')
 const util = require('util')
 const path = require('path')
 
-const { keepPictoOnly } = require('../../lib/svg_icon');
+const { parseIcon } = require('../../lib/svg_icon');
 
 module.exports = async (options) => {
   const readFile = util.promisify(fs.readFile)
@@ -20,7 +20,7 @@ module.exports = async (options) => {
     .map(iconFile => new Promise(async (resolve, reject) => {
       try {
         const svgStream = await readFile(`${path.resolve(options.styleDir)}/icons/${iconFile}`)
-        const cleanSvg = await keepPictoOnly(svgStream)
+        const { picto: cleanSvg } = await parseIcon(svgStream)
         const iconName = iconFile.match(/^(.*?)-[0-9]{1,2}\.svg$/)[1];
         const iconPath = path.join(tmpSvgs.name,  `${iconName}.svg`);
         fs.writeFileSync(iconPath, cleanSvg)
