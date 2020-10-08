@@ -4,6 +4,30 @@ const path = require('path')
 
 const { parseIcon, combinePictoPin, getColoredPin } = require('../../lib/svg_icon');
 
+const excludeList = [
+  // transports
+  'aerialway',
+  'airport',
+  'bus',
+  'entrance',
+  'ferry',
+  'parking',
+  'parking-bike',
+  'rail',
+  'rail-light',
+  'rail-metro',
+  // street furniture
+  'barrier',
+  'information',
+  'post-box',
+  'telephone',
+  'waste-basket',
+  // place types
+  'home',
+  'residential-community',
+  'town',
+];
+
 module.exports = async (options) => {
   const readFile = util.promisify(fs.readFile)
   const readdir = util.promisify(fs.readdir)
@@ -15,19 +39,19 @@ module.exports = async (options) => {
   const pinPromises = iconFiles
     /* use hi-res versions only */
     .filter(iconFile => iconFile.match(/-11\.svg$/))
-    // .slice(0, 26)
-    .map(iconFile => new Promise(async (resolve, reject) => {
+    .map(iconFile => iconFile.match(/^(.*?)-[0-9]{1,2}\.svg$/)[1])
+    .filter(iconName => !excludeList.includes(iconName))
+    .map(iconName => new Promise(async (resolve, reject) => {
       try {
-        const svgStream = await readFile(`${path.resolve(options.styleDir)}/icons/${iconFile}`)
+        const svgStream = await readFile(`${path.resolve(options.styleDir)}/icons/${iconName}-11.svg`)
         const { picto, color } = await parseIcon(svgStream)
-        console.log(iconFile, color);
         const coloredPin = await getColoredPin(pinStream, color);
         const pinWithPicto = await combinePictoPin(coloredPin, picto);
-        const iconName = iconFile.match(/^(.*?)-[0-9]{1,2}\.svg$/)[1];
         const iconPath = path.join(options.styleDir, 'build/pins',  `${iconName}.svg`);
         fs.writeFileSync(iconPath, pinWithPicto)
         resolve(iconPath)
       } catch(e) {
+        console.error(`Error processing icon ${iconName}`, e);
         reject(e)
       }
     }))
