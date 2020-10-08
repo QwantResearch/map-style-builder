@@ -14,7 +14,7 @@ module.exports = async (options) => {
 
   const pinPromises = iconFiles
     /* use hi-res versions only */
-    .filter(iconFile => iconFile.match(/-15\.svg$/))
+    .filter(iconFile => iconFile.match(/-11\.svg$/))
     // .slice(0, 26)
     .map(iconFile => new Promise(async (resolve, reject) => {
       try {
