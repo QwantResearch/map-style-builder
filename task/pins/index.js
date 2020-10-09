@@ -33,7 +33,7 @@ module.exports = async (options) => {
   const readdir = util.promisify(fs.readdir)
 
   const iconFiles = await readdir(`${path.resolve(options.styleDir)}/icons`)
-  const pinStream = await readFile('../../pin-mini.svg');
+  const pinStream = await readFile(path.join(__dirname, 'pin-mini.svg'));
   fs.mkdirSync(path.join(options.styleDir, 'build/pins'), { recursive: true });
 
   const pinPromises = iconFiles
