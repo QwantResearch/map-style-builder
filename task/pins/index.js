@@ -2,20 +2,9 @@ const fs = require('fs')
 const util = require('util')
 const path = require('path')
 
-const { parseIcon, combinePictoPin, getColoredPin } = require('../../lib/svg_icon');
+const { parseIcon, combinePictoPin } = require('../../lib/svg_icon');
 
 const excludeList = [
-  // transports
-  'aerialway',
-  'airport',
-  'bus',
-  'entrance',
-  'ferry',
-  'parking',
-  'parking-bike',
-  'rail',
-  'rail-light',
-  'rail-metro',
   // street furniture
   'barrier',
   'information',
@@ -45,8 +34,7 @@ module.exports = async (options) => {
       try {
         const svgStream = await readFile(`${path.resolve(options.styleDir)}/icons/${iconName}-11.svg`)
         const { picto, color } = await parseIcon(svgStream)
-        const coloredPin = await getColoredPin(pinStream, color);
-        const pinWithPicto = await combinePictoPin(coloredPin, picto);
+        const pinWithPicto = await combinePictoPin(pinStream, picto, color);
         const iconPath = path.join(options.styleDir, 'build/pins',  `pin-${iconName}.svg`);
         fs.writeFileSync(iconPath, pinWithPicto)
         resolve(iconPath)
