@@ -1,24 +1,22 @@
 const fs = require('fs-extra')
 const path = require('path')
-const glob = require('glob')
 const spritezero = require('@mapbox/spritezero')
 
-module.exports = options => {
+module.exports = (options, files) => {
   if(!options.outPath) {
     console.error('No output path given')
     return
   }
 
-  const svgs = glob.sync(path.resolve(path.join(options.styleDir, 'icons', '*.svg')))
-    .map(function(f) {
-      return {
-        svg: fs.readFileSync(f),
-        id: path.basename(f).replace('.svg', '')
-      }
-    })
+  const svgs = files.map(function(f) {
+    return {
+      svg: fs.readFileSync(f),
+      id: path.basename(f).replace('.svg', '')
+    }
+  })
 
-    options.pixelRatios = options.pixelRatios || [1]
-    options.pixelRatios.forEach((pixelRatio) => {
+  options.pixelRatios = options.pixelRatios || [1]
+  options.pixelRatios.forEach((pixelRatio) => {
     let pixelRatioPath = `sprite${pixelRatio > 1 ? `@${pixelRatio}x` : ''}`
     let jsonPath = `${options.outPath}/${pixelRatioPath}.json`
     let pngPath = `${options.outPath}/${pixelRatioPath}.png`

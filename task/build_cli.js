@@ -31,19 +31,19 @@ const builtStyle = build(style, options);
 outPath = path.join(buildDir, 'built-style.json');
 fs.writeFileSync(outPath, builtStyle, 'utf8');
 
-options.webfont = false; /* we don't need build sprite & font twice */
-options.needSprite = false
-options.pins = false
+// options.webfont = false; // we don't need build sprite & font twice */
+// options.needSprite = false
+// options.pins = false
 
-options.output = 'debug'
-const builtStyleDebug = build(style, options);
-outPath = path.join(buildDir, 'built-style-debug.json');
-fs.writeFileSync(outPath, JSON.stringify(JSON.parse(builtStyleDebug), null, 2), 'utf8'); //trick to restore formatting
+// options.output = 'debug'
+// const builtStyleDebug = build(style, options);
+// outPath = path.join(buildDir, 'built-style-debug.json');
+// fs.writeFileSync(outPath, JSON.stringify(JSON.parse(builtStyleDebug), null, 2), 'utf8'); //trick to restore formatting
 
-options.output = 'omt';
-const builtStyleOmt = build(style, options);
-outPath = path.join(buildDir, 'style-omt.json');
-fs.writeFileSync(outPath, builtStyleOmt, 'utf8');
+// options.output = 'omt';
+// const builtStyleOmt = build(style, options);
+// outPath = path.join(buildDir, 'style-omt.json');
+// fs.writeFileSync(outPath, builtStyleOmt, 'utf8');
 
 
 fs.copySync(path.join(__dirname, '..', 'compare.html'), path.join(buildDir, 'compare.html'));

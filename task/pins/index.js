@@ -47,7 +47,7 @@ module.exports = async (options) => {
         const { picto, color } = await parseIcon(svgStream)
         const coloredPin = await getColoredPin(pinStream, color);
         const pinWithPicto = await combinePictoPin(coloredPin, picto);
-        const iconPath = path.join(options.styleDir, 'build/pins',  `${iconName}.svg`);
+        const iconPath = path.join(options.styleDir, 'build/pins',  `pin-${iconName}.svg`);
         fs.writeFileSync(iconPath, pinWithPicto)
         resolve(iconPath)
       } catch(e) {
