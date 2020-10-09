@@ -37,7 +37,7 @@ module.exports = async (options) => {
   fs.mkdirSync(path.join(options.styleDir, 'build/pins'), { recursive: true });
 
   const pinPromises = iconFiles
-    /* use hi-res versions only */
+    /* use lo-res versions, like for the POI layers */
     .filter(iconFile => iconFile.match(/-11\.svg$/))
     .map(iconFile => iconFile.match(/^(.*?)-[0-9]{1,2}\.svg$/)[1])
     .filter(iconName => !excludeList.includes(iconName))
