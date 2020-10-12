@@ -44,8 +44,9 @@ module.exports = async (options) => {
       }
     }))
 
-  return Promise.all(pinPromises).then(() => {
+  return Promise.all(pinPromises).then(pinIconPaths => {
     console.log(`${pinPromises.length} pins built, written in ${path.join(options.outPath, 'pins')}`);
+    return pinIconPaths;
   }, error => {
     console.error('Error while building pinPromises!', error);
   });
