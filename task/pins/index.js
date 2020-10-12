@@ -23,7 +23,7 @@ module.exports = async (options) => {
 
   const iconFiles = await readdir(`${path.resolve(options.styleDir)}/icons`)
   const pinStream = await readFile(path.join(__dirname, 'pin-mini.svg'));
-  fs.mkdirSync(path.join(options.styleDir, 'build/pins'), { recursive: true });
+  fs.mkdirSync(path.join(options.outPath, 'pins'), { recursive: true });
 
   const pinPromises = iconFiles
     /* use lo-res versions, like for the POI layers */
@@ -35,7 +35,7 @@ module.exports = async (options) => {
         const svgStream = await readFile(`${path.resolve(options.styleDir)}/icons/${iconName}-11.svg`)
         const { picto, color } = await parseIcon(svgStream)
         const pinWithPicto = await combinePictoPin(pinStream, picto, color);
-        const iconPath = path.join(options.styleDir, 'build/pins',  `pin-${iconName}.svg`);
+        const iconPath = path.join(options.outPath, 'pins',  `pin-${iconName}.svg`);
         fs.writeFileSync(iconPath, pinWithPicto)
         resolve(iconPath)
       } catch(e) {
@@ -45,7 +45,7 @@ module.exports = async (options) => {
     }))
 
   return Promise.all(pinPromises).then(() => {
-    console.log(`${pinPromises.length} pins built`);
+    console.log(`${pinPromises.length} pins built, written in ${path.join(options.outPath, 'pins')}`);
   }, error => {
     console.error('Error while building pinPromises!', error);
   });
