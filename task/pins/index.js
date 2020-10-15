@@ -4,19 +4,6 @@ const path = require('path')
 
 const { parseIcon, combinePictoPin } = require('../../lib/svg_icon');
 
-const excludeList = [
-  // street furniture
-  'barrier',
-  'information',
-  'post-box',
-  'telephone',
-  'waste-basket',
-  // place types
-  'home',
-  'residential-community',
-  'town',
-];
-
 module.exports = async (options) => {
   const readFile = util.promisify(fs.readFile)
   const readdir = util.promisify(fs.readdir)
@@ -29,12 +16,14 @@ module.exports = async (options) => {
     /* use lo-res versions, like for the POI layers */
     .filter(iconFile => iconFile.match(/-11\.svg$/))
     .map(iconFile => iconFile.match(/^(.*?)-[0-9]{1,2}\.svg$/)[1])
-    .filter(iconName => !excludeList.includes(iconName))
     .map(iconName => new Promise(async (resolve, reject) => {
       try {
         const svgStream = await readFile(`${path.resolve(options.styleDir)}/icons/${iconName}-11.svg`)
-        const { picto, color } = await parseIcon(svgStream)
-        const pinWithPicto = await combinePictoPin(pinStream, picto, color);
+        const pictoData = await parseIcon(svgStream)
+        if (['home', 'residential-community', 'town'].includes(iconName)) {
+          pictoData.transform = 'translate(1.25 1.25)';
+        }
+        const pinWithPicto = await combinePictoPin(pinStream, pictoData);
         const iconPath = path.join(options.outPath, 'pins',  `pin-${iconName}.svg`);
         fs.writeFileSync(iconPath, pinWithPicto)
         resolve(iconPath)
