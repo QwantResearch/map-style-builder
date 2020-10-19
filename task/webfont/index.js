@@ -1,62 +1,52 @@
-const xml2js = require('xml2js');
 const webfontsGenerator = require('webfonts-generator');
 const tmp = require('tmp')
 
-const asyncParseString = xml2js.parseString
 const fs = require('fs')
 const util = require('util')
 const path = require('path')
 
+const { parseIcon } = require('../../lib/svg_icon');
 
 module.exports = async (options) => {
-  /* promisify */
   const readFile = util.promisify(fs.readFile)
   const readdir = util.promisify(fs.readdir)
-  const parseString = util.promisify(asyncParseString)
+  const tmpSvgs = tmp.dirSync({unsafeCleanup : true})
 
-  if(options.webfont) {
-    let icons = await readdir(`${path.resolve(options.styleDir)}/icons`)
-    const tmpSvgs = tmp.dirSync({unsafeCleanup : true})
+  const iconFiles = await readdir(`${path.resolve(options.styleDir)}/icons`)
 
-    /* clean circle form from SVG */
-    let iconsPromises = icons.filter((icon) => {
-      /* clean size from svg */
-      return icon.match(/-15\.svg$/)
-    }).map((icon) => {
-      const xmlBuilder = new xml2js.Builder()
-      return new Promise(async (resolve, reject) => {
-        try {
-          let svgStream = await readFile(`${path.resolve(options.styleDir)}/icons/${icon}`)
-          let data = await parseString(svgStream)
-          delete data.svg.rect
-          const xml = xmlBuilder.buildObject(data)
-          let iconName = icon.match(/^(.*?)-[0-9]{1,2}\.svg$/)[1]
-          fs.writeFileSync(`${tmpSvgs.name}/${iconName}.svg`,xml)
-          resolve(iconName)
-        } catch(e) {
-          reject(e)
-        }
-      })
+  const cleanedIconsPromises = iconFiles
+    /* use hi-res versions only */
+    .filter(iconFile => iconFile.match(/-15\.svg$/))
+    .map(iconFile => new Promise(async (resolve, reject) => {
+      try {
+        const svgStream = await readFile(`${path.resolve(options.styleDir)}/icons/${iconFile}`)
+        const { picto: cleanSvg } = await parseIcon(svgStream)
+        const iconName = iconFile.match(/^(.*?)-[0-9]{1,2}\.svg$/)[1];
+        const iconPath = path.join(tmpSvgs.name,  `${iconName}.svg`);
+        fs.writeFileSync(iconPath, cleanSvg)
+        resolve(iconPath)
+      } catch(e) {
+        reject(e)
+      }
+    }))
+
+  const cleanedIconFiles = await Promise.all(cleanedIconsPromises)
+
+  /* build font */
+  return new Promise((resolve, reject) => {
+    webfontsGenerator({
+      fontHeight : 150,
+      files: cleanedIconFiles,
+      dest: `${path.resolve(options.styleDir)}/build/font`
+    }, (error, result) => {
+      tmpSvgs.removeCallback()
+      if (error) {
+        console.error('Error while building webfont!', error);
+        reject(err)
+      } else {
+        console.log(`Webfont built (${cleanedIconFiles.length} glyphs)`);
+        resolve()
+      }
     })
-
-    let cleanedIcons = await Promise.all(iconsPromises)
-
-    /* build font */
-    return new Promise((resolve, reject) => {
-      webfontsGenerator({
-        fontHeight : 150,
-        files: cleanedIcons.map((icon) => {return `${path.join(tmpSvgs.name, `${icon}.svg`)}`}),
-        dest: `${path.resolve(options.styleDir)}/build/font`
-      }, (error, result) => {
-        tmpSvgs.removeCallback()
-        if (error) {
-          console.error('Error while building webfont!', error);
-          reject(err)
-        } else {
-          console.log(`Webfont built (${cleanedIcons.length} glyphs)`);
-          resolve()
-        }
-      })
-    })
-  }
+  })
 }

@@ -12,6 +12,7 @@ const styleStr = fs.readFileSync(stylePath, 'utf8');
 const style = JSON.parse(styleStr);
 const jsonconf = JSON.parse(confStr);
 const webfont = args.webfont
+const pins = args.pins
 
 let options = {
   styleDir: args['style-dir'],
@@ -20,7 +21,8 @@ let options = {
   outPath: buildDir,
   i18n: args['i18n'],
   icons: args['icons'],
-  webfont:webfont
+  webfont:webfont,
+  pins: pins,
 };
 
 mkdirp(buildDir)
@@ -29,8 +31,9 @@ const builtStyle = build(style, options);
 outPath = path.join(buildDir, 'built-style.json');
 fs.writeFileSync(outPath, builtStyle, 'utf8');
 
-options.webfont = false; /* we don't need build sprite & font twice */
+options.webfont = false; // we don't need build sprite & font twice */
 options.needSprite = false
+options.pins = false
 
 options.output = 'debug'
 const builtStyleDebug = build(style, options);
