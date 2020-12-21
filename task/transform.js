@@ -92,12 +92,12 @@ exports.adjustStyleForMapTilerCloud = function(opts) {
   }
 
   if (opts.needSprite) {
-    style.sprite = "https://qwantresearch.github.io/qwant-basic-gl-style/sprite";
+    style.sprite = "https://qwant.github.io/qwant-basic-gl-style/sprite";
   } else {
     delete style.sprite;
   }
 
-  style.glyphs = "https://qwantresearch.github.io/fonts/{fontstack}/{range}.pbf";
+  style.glyphs = "https://qwant.github.io/qwant-maps-fonts/{fontstack}/{range}.pbf";
 
 
 };

@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/QwantResearch/map-style-builder"
+    "url": "git+https://github.com/Qwant/map-style-builder"
   },
   "authors": [
     "nlehuby <n.lehuby@qwant.com>",
@@ -19,9 +19,9 @@
   ],
   "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/QwantResearch/map-style-builder/issues"
+    "url": "https://github.com/Qwant/map-style-builder/issues"
   },
-  "homepage": "https://github.com/QwantResearch/map-style-builder#readme",
+  "homepage": "https://github.com/Qwant/map-style-builder#readme",
   "dependencies": {
     "@mapbox/mapbox-gl-style-spec": "^13.13.1",
     "@mapbox/spritezero": "^6.1.0",

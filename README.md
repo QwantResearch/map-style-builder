@@ -11,7 +11,7 @@ This readme explains the common use cases of the standalone version.
 
 ## Requirements
 
-You will need a style repository, for instance [Qwant basic style](https://github.com/QwantResearch/qwant-basic-gl-style).
+You will need a style repository, for instance [Qwant basic style](https://github.com/Qwant/qwant-basic-gl-style).
 It contains:
   - a template style saved as a `style.json`
   - some config files (`*.yml`) used to overwrite some fields in the template style
@@ -43,11 +43,11 @@ You can use the built `compare.html` page to compare your style to other ones (o
 
 You need to insert a valid Mapbox token in the built `compare.html` page.
 
-If you are not from Qwant, you may also want to replace the [style url](https://github.com/QwantResearch/map-style-builder/blob/master/compare.html#L81) by `style-omt.json` to use the OpenMapTiles version of the style.
+If you are not from Qwant, you may also want to replace the [style url](./compare.html#L81) by `style-omt.json` to use the OpenMapTiles version of the style.
 
 
 #### Debug
 
 You can use the built `debug.html` page to inspect your tiles et check your style.
 
-If you are not from Qwant, you may want to replace the [style url](https://github.com/QwantResearch/map-style-builder/blob/master/debug.html#L35) by `style-omt.json` to use the OpenMapTiles version of the style.
+If you are not from Qwant, you may want to replace the [style url](./debug.html#L35) by `style-omt.json` to use the OpenMapTiles version of the style.
