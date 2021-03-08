@@ -6,7 +6,8 @@ const fontTest = require('./fonts')
 const i18nTest = require('./i18n')
 const iconsTest = require('./icons')
 
-let args = require('./../lib/style_args').argv;
+// Use yargs for parsing only, preventing it from exiting if some args are missing 
+let args = require('./../lib/style_args').fail(() => {}).argv;
 
 const styleDir = path.resolve(args.style_dir);
 const stylePath = path.resolve(`${styleDir}/style.json`);
